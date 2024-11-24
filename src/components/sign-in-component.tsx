@@ -6,9 +6,7 @@ import {loginQuery} from "../api/query/login-query.ts";
 import {setLocalStorageData} from "../utils/setLocalStorageData.ts";
 import {alertErrorToast} from "../utils/alertErrorToast.ts";
 import {alertSuccessToast} from "../utils/alertSuccessToast.ts";
-import useAuthHook from "../hooks/use-auth-hook.tsx";
-import LoadSuspense from "./load-suspense.tsx";
-import {Navigate, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {useState} from "react";
 
 export default function SignInComponent() {
@@ -20,16 +18,8 @@ export default function SignInComponent() {
         reset,
     } = useForm<LoginModel>();
     const navigate = useNavigate();
-    const {load, isSession} = useAuthHook();
+
     const [isLoadLogin, setIsLoadLogin] = useState<boolean>(false);
-
-    if (load) {
-        return <LoadSuspense/>
-    }
-
-    if (isSession) {
-        return <Navigate to="/admin/accounts"/>
-    }
 
     async function handleLogin(data: LoginModel) {
         setIsLoadLogin(true);

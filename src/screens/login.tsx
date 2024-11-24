@@ -1,12 +1,24 @@
 import SignInComponent from "../components/sign-in-component.tsx";
 import {useState} from "react";
 import RegisterComponent from "../components/register-component.tsx";
+import LoadSuspense from "../components/load-suspense.tsx";
+import {Navigate} from "react-router-dom";
+import useAuthHook from "../hooks/use-auth-hook.tsx";
 
 export type TypesLogin = 'sign_in' | 'register';
 
 export default function Login() {
 
+    const {load, isSession} = useAuthHook();
     const [typeLogin, setTypeLogin] = useState<TypesLogin>('sign_in');
+
+    if (load) {
+        return <LoadSuspense/>
+    }
+
+    if (isSession) {
+        return <Navigate to="/admin/accounts"/>
+    }
 
     function handleChangeTypeLogin(type: TypesLogin) {
         setTypeLogin(type);
