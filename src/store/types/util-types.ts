@@ -1,0 +1,1 @@
+export const SELECTED_NAV = 'SELECTED_NAV';
