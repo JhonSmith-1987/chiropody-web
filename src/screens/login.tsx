@@ -1,5 +1,5 @@
 import SignInComponent from "../components/sign-in-component.tsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import RegisterComponent from "../components/register-component.tsx";
 import LoadSuspense from "../components/load-suspense.tsx";
 import {Navigate} from "react-router-dom";
@@ -11,6 +11,10 @@ export default function Login() {
 
     const {load, isSession} = useAuthHook();
     const [typeLogin, setTypeLogin] = useState<TypesLogin>('sign_in');
+
+    useEffect(() => {
+        console.log(isSession);
+    }, [isSession]);
 
     if (load) {
         return <LoadSuspense/>

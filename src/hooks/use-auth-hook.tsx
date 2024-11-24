@@ -8,13 +8,13 @@ export default function useAuthHook() {
 
     useEffect(() => {
         const token = getLocalStorageData('tkn_chiropody');
-        if (token !== '') {
+        if (!token) {
+            setIsSession(false);
+            setLoad(false);
+        } else {
             setIsSession(true);
             setLoad(false);
-            return;
         }
-        setIsSession(false);
-        setLoad(false);
     }, []);
     
     return {load, isSession};
