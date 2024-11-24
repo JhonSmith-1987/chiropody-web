@@ -19,7 +19,7 @@ export default function Router() {
             <Suspense fallback={ <LoadSuspense/> }>
                 <Routes>
                     <Route path="/" Component={Login}/>
-                    <Route path="/accounts" Component={AccountAdmin}/>
+                    <Route path="/admin/accounts" Component={AccountAdmin}/>
                     <Route path="*" Component={NotFound}/>
                 </Routes>
             </Suspense>

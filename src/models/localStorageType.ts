@@ -1,0 +1,1 @@
+export type localStorageType = 'remember_email_chiropody' | 'tkn_chiropody';

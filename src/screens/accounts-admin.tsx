@@ -1,7 +1,20 @@
 import AdminLayout from "../layout/admin-layout.tsx";
 import CalendarComponent from "../components/calendar-component.tsx";
+import useAuthHook from "../hooks/use-auth-hook.tsx";
+import LoadSuspense from "../components/load-suspense.tsx";
+import {Navigate} from "react-router-dom";
 
 export default function AccountsAdmin() {
+
+    const {isSession, load} = useAuthHook();
+
+    if (load) {
+        return <LoadSuspense/>;
+    }
+
+    if (!isSession) {
+        return <Navigate to="/"/>;
+    }
 
     return (
         <AdminLayout>
