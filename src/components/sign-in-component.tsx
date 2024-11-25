@@ -7,7 +7,9 @@ import {setLocalStorageData} from "../utils/setLocalStorageData.ts";
 import {alertErrorToast} from "../utils/alertErrorToast.ts";
 import {alertSuccessToast} from "../utils/alertSuccessToast.ts";
 import {useNavigate} from "react-router-dom";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import {getLocalStorageData} from "../utils/getLocalStorageData.ts";
+import {removeItemLocalStorage} from "../utils/removeItemLocalStorage.ts";
 
 export default function SignInComponent() {
 
@@ -16,13 +18,30 @@ export default function SignInComponent() {
         handleSubmit,
         formState: {errors},
         reset,
+        setValue,
     } = useForm<LoginModel>();
     const navigate = useNavigate();
-
     const [isLoadLogin, setIsLoadLogin] = useState<boolean>(false);
+    const [rememberEmail, setRememberEmail] = useState<boolean>(false);
 
+    useEffect(() => {
+        const remember_email = getLocalStorageData('remember_email_chiropody');
+        if (!remember_email) {
+            setRememberEmail(false);
+        } else {
+            setValue('email', remember_email);
+            setRememberEmail(true);
+        }
+    }, [setValue]);
+    
     async function handleLogin(data: LoginModel) {
         setIsLoadLogin(true);
+        if (rememberEmail) {
+            setLocalStorageData('remember_email_chiropody', data.email);
+        }
+        if (!rememberEmail) {
+            removeItemLocalStorage('remember_email_chiropody');
+        }
         const response = await loginQuery(data);
         if (response.status === 200 && response.token && response.user_roll) {
             setLocalStorageData('tkn_chiropody', response.token);
@@ -40,6 +59,10 @@ export default function SignInComponent() {
         }
         alertErrorToast(response.message);
         setIsLoadLogin(false);
+    }
+
+    function handleRememberEmail(checked: boolean) {
+        setRememberEmail(checked);
     }
 
     return (
@@ -103,6 +126,8 @@ export default function SignInComponent() {
             <label
                 className="flex items-center justify-start gap-2 text-sm font-semibold text-indigo-400 hover:text-indigo-300 cursor-pointer">
                 <input
+                    checked={rememberEmail}
+                    onChange={(event) => handleRememberEmail(event.target.checked)}
                     id="comments"
                     type="checkbox"
                     aria-describedby="comments-description"
