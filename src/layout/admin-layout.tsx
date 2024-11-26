@@ -7,16 +7,17 @@ import {
     DocumentDuplicateIcon,
     FolderIcon,
     // HomeIcon,
-    UsersIcon,
+    // UsersIcon,
     XMarkIcon,
     UserCircleIcon,
-} from '@heroicons/react/24/outline'
+    Squares2X2Icon,
+} from '@heroicons/react/24/outline';
 import {useAppSelector} from "../hooks/store-hook.ts";
 import {useNavigate} from "react-router-dom";
 
 const navigation = [
     {name: 'Cuentas', href: '/admin/accounts', icon: UserCircleIcon, current: true},
-    {name: 'Team', href: '#', icon: UsersIcon, current: false},
+    {name: 'Aplicaciones', href: '/admin/applications', icon: Squares2X2Icon , current: false},
     {name: 'Projects', href: '#', icon: FolderIcon, current: false},
     {name: 'Calendar', href: '#', icon: CalendarIcon, current: false},
     {name: 'Documents', href: '#', icon: DocumentDuplicateIcon, current: false},
@@ -139,7 +140,7 @@ export default function AdminLayout({children}: Props) {
                                                         item.href === navSelected
                                                             ? 'bg-gray-800 text-white'
                                                             : 'text-gray-400 hover:bg-gray-800 hover:text-white',
-                                                        'group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold',
+                                                        'group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold cursor-pointer',
                                                     )}
                                                 >
                                                     <item.icon aria-hidden="true" className="size-6 shrink-0"/>

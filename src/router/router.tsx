@@ -2,7 +2,7 @@ import {Toaster} from "react-hot-toast";
 import {Route, Routes} from "react-router-dom";
 import LoadSuspense from "../components/load-suspense.tsx";
 import {Suspense} from "react";
-import {Login, AccountAdmin, NotFound} from './routes-data.ts';
+import {Login, AccountAdmin, ApplicationsAdmin, NotFound} from './routes-data.ts';
 
 export default function Router() {
 
@@ -20,6 +20,7 @@ export default function Router() {
                 <Routes>
                     <Route path="/" Component={Login}/>
                     <Route path="/admin/accounts" Component={AccountAdmin}/>
+                    <Route path="/admin/applications" Component={ApplicationsAdmin}/>
                     <Route path="*" Component={NotFound}/>
                 </Routes>
             </Suspense>

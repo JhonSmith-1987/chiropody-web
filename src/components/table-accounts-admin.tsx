@@ -1,10 +1,23 @@
 import {AccountDataModel} from "../models/account-data-model.ts";
+import useAccountAdmin from "../hooks/use-account-admin.tsx";
+import {getLocalStorageData} from "../utils/getLocalStorageData.ts";
+import {UpdateStatusAccountModel} from "../models/update-status-account-model.ts";
 
 interface Props {
     allAccounts: AccountDataModel[];
 }
 
 export default function TableAccountsAdmin({allAccounts}:Props) {
+
+    const {updateStatusAccount} = useAccountAdmin();
+    const token = getLocalStorageData('tkn_chiropody');
+
+    async function handleChangeStatusAccount(status: string, account_id: string) {
+        const new_status: string = status === 'active' ? 'inactive' : 'active';
+        const data: UpdateStatusAccountModel = {status: new_status, account_id: account_id};
+        await updateStatusAccount(data, token)
+    }
+
     return (
         <div className="mt-8 flow-root">
             <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -53,9 +66,9 @@ export default function TableAccountsAdmin({allAccounts}:Props) {
                                         {account.status === 'active' ? 'Activo' : 'Inactivo'}
                                     </td>
                                     <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                                        <a href="#" className="text-indigo-400 hover:text-indigo-300">
-                                            Edit<span className="sr-only">, {account.name}</span>
-                                        </a>
+                                        <button onClick={() => handleChangeStatusAccount(account.status, account.id)} className="text-indigo-400 hover:text-indigo-300 mr-3">
+                                            {account.status === 'active' ? 'Desactivar' : 'Activar'}
+                                        </button>
                                     </td>
                                 </tr>
                             ))}

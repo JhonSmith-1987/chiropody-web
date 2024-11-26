@@ -2,7 +2,7 @@ import AdminLayout from "../layout/admin-layout.tsx";
 import useAuthHook from "../hooks/use-auth-hook.tsx";
 import LoadSuspense from "../components/load-suspense.tsx";
 import {Navigate} from "react-router-dom";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {useAppDispatch, useAppSelector} from "../hooks/store-hook.ts";
 import {setNavSelected} from "../store/actions/util-actions.ts";
 import TableAccountsAdmin from "../components/table-accounts-admin.tsx";
@@ -10,6 +10,7 @@ import InputSearch from "../components/input-search.tsx";
 import PaginateTableAccountAdmin from "../components/paginate-table-account-admin.tsx";
 import useAccountAdmin from "../hooks/use-account-admin.tsx";
 import {getLocalStorageData} from "../utils/getLocalStorageData.ts";
+import {generateStopPaginate} from "../utils/generateStopPaginate.ts";
 
 export default function AccountsAdmin() {
 
@@ -18,7 +19,8 @@ export default function AccountsAdmin() {
     const dispatch = useAppDispatch();
     const token = getLocalStorageData('tkn_chiropody');
     const allAccounts = useAppSelector((state) => state.accountState.allAccounts);
-    const size = 1;
+    const size = 5;
+    const debounceTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
     const [page, setPage] = useState<number>(0);
     const [search, setSearch] = useState<string>('');
 
@@ -42,14 +44,19 @@ export default function AccountsAdmin() {
     }
 
     async function nextPaginate() {
-        const newPage = page + 1;
-        await getAllAccounts({
-            search: '',
-            page: newPage.toString(),
-            size: size.toString(),
-            type: 'all'
-        }, token);
-        setPage(newPage);
+        if (allAccounts) {
+            const stop_paginate = generateStopPaginate(allAccounts.total_count, size);
+            if (page < stop_paginate) {
+                const newPage = page + 1;
+                await getAllAccounts({
+                    search: '',
+                    page: newPage.toString(),
+                    size: size.toString(),
+                    type: 'all'
+                }, token);
+                setPage(newPage);
+            }
+        }
     }
 
     async function prevPaginate() {
@@ -67,6 +74,26 @@ export default function AccountsAdmin() {
 
     function handleSearch(value: string) {
         setSearch(value);
+        if (debounceTimeout.current) {
+            clearTimeout(debounceTimeout.current);
+        }
+        debounceTimeout.current = setTimeout(() => {
+            if (value === '') {
+                getAllAccounts({
+                    search: '',
+                    page: '0',
+                    size: size.toString(),
+                    type: 'all'
+                }, token).then(() => {});
+            } else {
+                getAllAccounts({
+                    search: value,
+                    page: '0',
+                    size: size.toString(),
+                    type: 'search'
+                }, token).then(() => {});
+            }
+        }, 500);
     }
 
     return (
