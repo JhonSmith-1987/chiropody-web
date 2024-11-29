@@ -1,6 +1,5 @@
 import useAuthHook from "../hooks/use-auth-hook.tsx";
 import LoadSuspense from "../components/load-suspense.tsx";
-import {Navigate} from "react-router-dom";
 import AdminLayout from "../layout/admin-layout.tsx";
 import ApplicationListComponent from "../components/application-list-component.tsx";
 import {useEffect} from "react";
@@ -9,7 +8,7 @@ import {setNavSelected} from "../store/actions/util-actions.ts";
 
 export default function ApplicationsAdmin() {
 
-    const {isSession, load} = useAuthHook();
+    const {load} = useAuthHook();
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -18,10 +17,6 @@ export default function ApplicationsAdmin() {
 
     if (load) {
         return <LoadSuspense/>;
-    }
-
-    if (!isSession) {
-        return <Navigate to="/"/>;
     }
 
     return (

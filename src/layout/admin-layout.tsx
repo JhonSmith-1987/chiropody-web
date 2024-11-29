@@ -11,6 +11,7 @@ import {
     XMarkIcon,
     UserCircleIcon,
     Squares2X2Icon,
+    BanknotesIcon ,
 } from '@heroicons/react/24/outline';
 import {useAppSelector} from "../hooks/store-hook.ts";
 import {useNavigate} from "react-router-dom";
@@ -18,6 +19,7 @@ import {useNavigate} from "react-router-dom";
 const navigation = [
     {name: 'Cuentas', href: '/admin/accounts', icon: UserCircleIcon, current: true},
     {name: 'Aplicaciones', href: '/admin/applications', icon: Squares2X2Icon , current: false},
+    {name: 'Recargar cuenta', href: '/admin/recharge_Account', icon: BanknotesIcon, current: false},
     {name: 'Projects', href: '#', icon: FolderIcon, current: false},
     {name: 'Calendar', href: '#', icon: CalendarIcon, current: false},
     {name: 'Documents', href: '#', icon: DocumentDuplicateIcon, current: false},
@@ -36,6 +38,7 @@ export default function AdminLayout({children}: Props) {
 
     const navigate = useNavigate();
     const navSelected = useAppSelector((state) => state.utilState.navSelected);
+    const userActive = useAppSelector((state) => state.userState.userActive);
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
     function handleNavSelected(path: string) {
@@ -158,11 +161,11 @@ export default function AdminLayout({children}: Props) {
                                     >
                                         <img
                                             alt=""
-                                            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                                            src="/img/logo-podologia.png"
                                             className="size-8 rounded-full bg-gray-800"
                                         />
                                         <span className="sr-only">Your profile</span>
-                                        <span aria-hidden="true">Tom Cook</span>
+                                        <span aria-hidden="true">{userActive ? userActive.user.name : ''}</span>
                                     </a>
                                 </li>
                             </ul>

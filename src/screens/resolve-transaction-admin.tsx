@@ -1,0 +1,37 @@
+import useAuthHook from "../hooks/use-auth-hook.tsx";
+import LoadSuspense from "../components/load-suspense.tsx";
+import AdminLayout from "../layout/admin-layout.tsx";
+import {useEffect} from "react";
+import {useAppDispatch} from "../hooks/store-hook.ts";
+import {setNavSelected} from "../store/actions/util-actions.ts";
+import {useSearchParams} from "react-router-dom";
+
+export default function ResolveTransactionAdmin() {
+
+    const {load} = useAuthHook();
+    const dispatch = useAppDispatch();
+    const [searchParams] = useSearchParams();
+    const id = searchParams.get("id");
+
+    useEffect(() => {
+        dispatch(setNavSelected('/admin/recharge_Account'));
+    }, [dispatch]);
+
+    if (load) {
+        return <LoadSuspense/>;
+    }
+
+    return (
+        <AdminLayout>
+            <div className="bg-gray-900 min-h-screen">
+                <div className="mx-auto max-w-7xl">
+                    <div className="py-10">
+                        <div className="px-4 sm:px-6 lg:px-8">
+                            <button className="bg-indigo-900 text-white px-4 py-1 rounded-sm">resolver transaccion {id ? id : 'jhoncito'}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </AdminLayout>
+    );
+}

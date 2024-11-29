@@ -1,7 +1,6 @@
 import AdminLayout from "../layout/admin-layout.tsx";
 import useAuthHook from "../hooks/use-auth-hook.tsx";
 import LoadSuspense from "../components/load-suspense.tsx";
-import {Navigate} from "react-router-dom";
 import {useEffect, useRef, useState} from "react";
 import {useAppDispatch, useAppSelector} from "../hooks/store-hook.ts";
 import {setNavSelected} from "../store/actions/util-actions.ts";
@@ -14,7 +13,7 @@ import {generateStopPaginate} from "../utils/generateStopPaginate.ts";
 
 export default function AccountsAdmin() {
 
-    const {isSession, load} = useAuthHook();
+    const {load} = useAuthHook();
     const {getAllAccounts} = useAccountAdmin();
     const dispatch = useAppDispatch();
     const token = getLocalStorageData('tkn_chiropody');
@@ -37,10 +36,6 @@ export default function AccountsAdmin() {
 
     if (load) {
         return <LoadSuspense/>;
-    }
-
-    if (!isSession) {
-        return <Navigate to="/"/>;
     }
 
     async function nextPaginate() {
