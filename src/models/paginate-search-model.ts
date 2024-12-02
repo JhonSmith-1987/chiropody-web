@@ -1,4 +1,4 @@
-export interface AllSearchAccountsModel {
+export interface PaginateSearchModel {
     page: string;
     size: string;
     search: string;

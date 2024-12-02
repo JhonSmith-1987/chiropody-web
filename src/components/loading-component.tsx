@@ -1,6 +1,6 @@
-import {CirclesWithBar, ProgressBar, ThreeCircles} from "react-loader-spinner";
+import {CirclesWithBar, Oval, ProgressBar, ThreeCircles} from "react-loader-spinner";
 
-export type LoadingComponentType = 'circles_with_bar'|'progress_bar'|'three_circles';
+export type LoadingComponentType = 'circles_with_bar'|'progress_bar'|'three_circles'|'oval_buttons';
 
 interface Props {
     type_loading: LoadingComponentType;
@@ -47,6 +47,19 @@ export default function LoadingComponent({type_loading,}: Props) {
                     outerCircleColor="#fff"
                     innerCircleColor="#BB86FC"
                     ariaLabel="three-circles-loading"
+                    wrapperStyle={{}}
+                    wrapperClass=""
+                />
+            }
+            {type_loading === 'oval_buttons' &&
+                <Oval
+                    visible={true}
+                    height={18}
+                    width={18}
+                    color={"white"}
+                    strokeWidth={4}
+                    secondaryColor={"blue"}
+                    ariaLabel="oval-loading"
                     wrapperStyle={{}}
                     wrapperClass=""
                 />

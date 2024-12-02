@@ -8,3 +8,7 @@
     margin: 0;
     padding: 0;
 }
+
+.errors_form_clip {
+    clip-path: polygon(100% 0, 100% 90%, 10% 90%, 0 100%, 0 0);
+}

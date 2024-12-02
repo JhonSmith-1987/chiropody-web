@@ -12,6 +12,8 @@ import {
     UserCircleIcon,
     Squares2X2Icon,
     BanknotesIcon ,
+    CreditCardIcon,
+    UserGroupIcon,
 } from '@heroicons/react/24/outline';
 import {useAppSelector} from "../hooks/store-hook.ts";
 import {useNavigate} from "react-router-dom";
@@ -20,6 +22,8 @@ const navigation = [
     {name: 'Cuentas', href: '/admin/accounts', icon: UserCircleIcon, current: true},
     {name: 'Aplicaciones', href: '/admin/applications', icon: Squares2X2Icon , current: false},
     {name: 'Recargar cuenta', href: '/admin/recharge_Account', icon: BanknotesIcon, current: false},
+    {name: 'Pagos', href: '/admin/payment_transaction', icon: CreditCardIcon , current: false},
+    {name: 'Acreedores', href: '/admin/creditors', icon: UserGroupIcon  , current: false},
     {name: 'Projects', href: '#', icon: FolderIcon, current: false},
     {name: 'Calendar', href: '#', icon: CalendarIcon, current: false},
     {name: 'Documents', href: '#', icon: DocumentDuplicateIcon, current: false},

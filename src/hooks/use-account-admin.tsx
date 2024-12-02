@@ -1,5 +1,5 @@
 import {useAppDispatch} from "./store-hook.ts";
-import {AllSearchAccountsModel} from "../models/all-search-accounts-model.ts";
+import {PaginateSearchModel} from "../models/paginate-search-model.ts";
 import {getAllAccountsQueryPrivate} from "../api/query/get-all-accounts-query-private.ts";
 import {removeItemLocalStorage} from "../utils/removeItemLocalStorage.ts";
 import {useNavigate} from "react-router-dom";
@@ -12,7 +12,7 @@ export default function useAccountAdmin() {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    async function getAllAccounts(data: AllSearchAccountsModel, token: string|null) {
+    async function getAllAccounts(data: PaginateSearchModel, token: string|null) {
         if (!token) {
             removeItemLocalStorage('tkn_chiropody');
             dispatch(setAllAccount(null));

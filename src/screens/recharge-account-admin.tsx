@@ -5,7 +5,7 @@ import AdminLayout from "../layout/admin-layout.tsx";
 import {useEffect} from "react";
 import {useAppDispatch} from "../hooks/store-hook.ts";
 import {setNavSelected} from "../store/actions/util-actions.ts";
-import FormDataWompiComponent from "../components/form-data-wompi-component.tsx";
+import RechargeComponent from "../components/recharge-component.tsx";
 
 export default function RechargeAccountAdmin() {
 
@@ -30,7 +30,7 @@ export default function RechargeAccountAdmin() {
                 <div className="mx-auto max-w-7xl">
                     <div className="py-10">
                         <div className="px-4 sm:px-6 lg:px-8">
-                            <FormDataWompiComponent/>
+                            <RechargeComponent show_button={true} type={"recharge"}/>
                         </div>
                     </div>
                 </div>

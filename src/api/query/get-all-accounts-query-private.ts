@@ -1,9 +1,10 @@
 import {urlApi} from "../url-api.ts";
 import axios from 'axios';
-import {AllSearchAccountsModel} from "../../models/all-search-accounts-model.ts";
-import {ResponseAllSearchAccountsModel} from "../../models/response-all-search-accounts-model.ts";
+import {PaginateSearchModel} from "../../models/paginate-search-model.ts";
+import {ResponsePaginateSearchModel} from "../../models/response-paginate-search-model.ts";
+import {AccountDataModel} from "../../models/account-data-model.ts";
 
-export async function getAllAccountsQueryPrivate(data: AllSearchAccountsModel, token: string): Promise<ResponseAllSearchAccountsModel> {
+export async function getAllAccountsQueryPrivate(data: PaginateSearchModel, token: string): Promise<ResponsePaginateSearchModel<AccountDataModel[]>> {
     const config = {
         method: 'post',
         maxBodyLength: Infinity,
@@ -15,7 +16,7 @@ export async function getAllAccountsQueryPrivate(data: AllSearchAccountsModel, t
     };
     try {
         const response = await axios.request(config);
-        const resData = response.data as ResponseAllSearchAccountsModel;
+        const resData = response.data as ResponsePaginateSearchModel<AccountDataModel[]>;
         console.log(resData);
         return resData
     } catch (error) {

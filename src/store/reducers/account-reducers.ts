@@ -1,8 +1,9 @@
 import {ALL_SEARCH_ACCOUNTS} from "../types/account-types.ts";
-import {ResponseAllSearchAccountsModel} from "../../models/response-all-search-accounts-model.ts";
+import {ResponsePaginateSearchModel} from "../../models/response-paginate-search-model.ts";
+import {AccountDataModel} from "../../models/account-data-model.ts";
 
 export interface IStateAccount {
-    allAccounts: ResponseAllSearchAccountsModel|null;
+    allAccounts: ResponsePaginateSearchModel<AccountDataModel[]>|null;
 }
 const initialStateAccount: IStateAccount = {
     allAccounts: null,
